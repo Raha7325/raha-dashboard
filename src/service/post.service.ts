@@ -1,28 +1,24 @@
 import Service, { Dispatch } from './service';
 
-class RestaurantsService {
+class  PostsService {
   private readonly service = new Service();
 
   public getList(args?: Partial<Dispatch>) {
     return this.service.dispatch ({
       ...args,
       method: 'GET',
-      path: '/restaurants',
+      path: '/posts',
     })
   }
-  public sendData(args?: Partial<Dispatch>) {
-    const payload = {
-      data: args?.payload
-    }
+  public createPost(args?: Partial<Dispatch>) {
     return this.service.dispatch ({
       ...args,
       method: 'POST',
-      path: '/restaurants',
-      payload
-    })
+      path: '/posts'
+    })  
   }
 }
 
-export default new RestaurantsService();
+export default new PostsService();
 
 

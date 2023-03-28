@@ -27,7 +27,6 @@
             name="categories"
             :id="category.id"
           />
-          {{ modifiedData.categories }}
         </div>
       </div>
       <br>
@@ -39,7 +38,7 @@
   </template>
   
   <script lang="ts">
-  import { CategoriesService, RestaurantService, FavoriteService } from '../service';
+  import { CategoriesService, RestaurantService, FavoriteService, PostService } from '../service';
 import { Dispatch } from '../service/service';
   interface MyData extends Partial<Dispatch> {
   name: string;
@@ -63,20 +62,19 @@ import { Dispatch } from '../service/service';
     async mounted() {
         const allCategories = await CategoriesService.getList();
         this.Categories = allCategories.body;
-        const allRestaurants = await RestaurantService.getList();
+        // const allRestaurants = await RestaurantService.getList();
+        // const posts = await PostService.getList();
+        // console.log(posts)
+        // const createPost = await RestaurantService.sendData()
+        
     },
     methods: {
+      
       async handleSubmit() {
         const favorites = await FavoriteService.getList();
         console.log("favorites", favorites)
         try {
-          const res = await RestaurantService.sendData({
-            payload: {
-              name: this.modifiedData.name,
-              description: this.modifiedData.description,
-              Categories: this.modifiedData.categories,
-            }
-          });
+          const res = await RestaurantService.sendData({payload: this.modifiedData});
           if(res.ok) {
             console.log(res)
           }else {
